@@ -88,6 +88,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_style"
             android:text="Авторизироваться"
+            android:onClick="login"
             android:textAllCaps="false"
             android:textColor="@drawable/button_text_color"
             android:textSize="17dp"
