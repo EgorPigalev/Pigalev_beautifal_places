@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:id="@+id/menuTopPlacesFragment"
+        android:icon="@drawable/icon_top"
+        android:title="Топ-10 мест"/>
+
     <item android:id="@+id/menuProfile"
         android:icon="@drawable/icon_profile"
         android:title="Профиль"/>
 
-    <item android:id="@+id/main"
-        android:icon="@drawable/icon_profile"
-        android:title="Главное меню"/>
-
-    <item android:id="@+id/fovorites"
-        android:icon="@drawable/icon_profile"
+    <item android:id="@+id/menuFovorites"
+        android:icon="@drawable/icon_favorites"
         android:title="Избранное"/>
+
+    <item android:id="@+id/menuAllPlaces"
+        android:icon="@drawable/icon_all_places"
+        android:title="Все места"/>
+
+    <item android:title="Другие">
+        <menu>
+            <item
+                android:id="@+id/menuAboutUs"
+                android:icon="@drawable/icon_about_us"
+                android:title="О приложении"/>
+
+            <item
+                android:id="@+id/menuExitAccount"
+                android:icon="@drawable/exit_account"
+                android:title="Выйти из учетной записи"/>
+
+        </menu>
+    </item>
 
 </menu>

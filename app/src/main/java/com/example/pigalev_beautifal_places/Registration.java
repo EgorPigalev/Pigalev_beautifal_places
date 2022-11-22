@@ -78,11 +78,11 @@ public class Registration extends AppCompatActivity {
 
     public void nextRegistrarion(View v)
     {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, Login.class));
     }
 
     public void nextAuthorization(View v)
     {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, Login.class));
     }
 }

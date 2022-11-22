@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class Login extends AppCompatActivity {
 
     ImageView image;
     EditText textPassword, textEmailOrPhone;
@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         image = findViewById(R.id.ivVisiblePassword);
         textEmailOrPhone = findViewById(R.id.textEmailOrPhone);
         textPassword = findViewById(R.id.textPassword);
@@ -57,6 +57,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void login(View v)
     {
-        startActivity(new Intent(this, test.class));
+        startActivity(new Intent(this, Main.class));
     }
 }
