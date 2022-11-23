@@ -15,4 +15,9 @@
         android:name="com.example.pigalev_beautifal_places.TopPlacesFragment"
         android:label="Топ-10 мест"
         tools:layout="@layout/fragment_top_places" />
+    <fragment
+        android:id="@+id/menuAllPlaces"
+        android:name="com.example.pigalev_beautifal_places.AllPlacesFragment"
+        android:label="Красивые места"
+        tools:layout="@layout/fragment_all_places" />
 </navigation>
