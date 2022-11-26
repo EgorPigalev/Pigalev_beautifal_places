@@ -39,15 +39,6 @@ public class AdapterMask extends BaseAdapter {
         return maskList.get(i).getID();
     }
 
-    private Bitmap getUserImage(String encodedImg) // Преобразование из String в Bitmap
-    {
-
-        if(encodedImg!=null&& !encodedImg.equals("null")) {
-            byte[] bytes = Base64.decode(encodedImg, Base64.DEFAULT);
-            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        }
-        else
-            return null;}
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -55,18 +46,9 @@ public class AdapterMask extends BaseAdapter {
         View v = View.inflate(mContext,R.layout.item_mask,null);
 
         TextView Name = v.findViewById(R.id.namePlace);
-        ImageView Picture = v.findViewById(R.id.ivPhoto);
 
         Mask mask = maskList.get(position);
         Name.setText(mask.getName());
-        if(mask.getPicture() == null)
-        {
-            Picture.setImageResource(R.drawable.absence);
-        }
-        else
-        {
-            Picture.setImageBitmap(getUserImage(mask.getPicture()));
-        }
 
         return v;
     }

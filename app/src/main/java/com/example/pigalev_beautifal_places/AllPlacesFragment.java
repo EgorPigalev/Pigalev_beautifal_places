@@ -68,7 +68,7 @@ public class AllPlacesFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        String query = "Select * From BeautifulPlace";
+        String query = "Select id_beautiful_place, name From BeautifulPlace";
         RequestExecution(query);
     }
 
@@ -99,8 +99,7 @@ public class AllPlacesFragment extends Fragment {
                 {
                     Mask tempMask = new Mask
                             (resultSet.getInt("ID"),
-                                    resultSet.getString("Name"),
-                                    resultSet.getString("Picture")
+                                    resultSet.getString("Name")
                             );
                     data.add(tempMask);
                     pAdapter.notifyDataSetInvalidated();
