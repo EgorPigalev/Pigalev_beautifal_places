@@ -33,7 +33,7 @@
                 android:background="@drawable/first_layer_profile">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/imageProfile"
+                    android:id="@+id/cvImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
@@ -43,6 +43,7 @@
                     android:layout_margin="10dp">
 
                     <ImageView
+                        android:id="@+id/imageProfile"
                         android:layout_width="200dp"
                         android:layout_height="200dp"
                         android:src="@drawable/ava"
@@ -56,14 +57,13 @@
                     android:id="@+id/nameProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="EgorPigalev"
                     android:textSize="24dp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:layout_margin="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/imageProfile"
+                    app:layout_constraintTop_toBottomOf="@id/cvImage"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -146,6 +146,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnExitProfile"
             android:layout_margin="10dp"
+            />
+
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/btnDeleteProfile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

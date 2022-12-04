@@ -10,7 +10,7 @@
         android:layout_height="150dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/absence"/>
+        app:srcCompat="@drawable/absence_place"/>
 
     <TextView
         android:id="@+id/namePlace"

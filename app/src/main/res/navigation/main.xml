@@ -33,6 +33,6 @@
     <fragment
         android:id="@+id/menuExitAccount"
         android:name="com.example.pigalev_beautifal_places.ExitFragment"
-        android:label="fragment_exit"
+        android:label="Выход"
         tools:layout="@layout/fragment_exit" />
 </navigation>

@@ -22,10 +22,14 @@ import com.google.android.material.navigation.NavigationView;
 
 public class Main extends AppCompatActivity {
 
+    public static int index;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Bundle arguments = getIntent().getExtras();
+        index = arguments.getInt("key");
 
         final DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
 
