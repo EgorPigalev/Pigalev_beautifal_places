@@ -1,5 +1,8 @@
 package com.example.pigalev_beautifal_places;
 
+import android.app.Activity;
+
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +13,7 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -38,6 +42,7 @@ public class Main extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.navHostFragment);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+
         final TextView textTitle = findViewById(R.id.textTitle);
 
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
@@ -48,4 +53,9 @@ public class Main extends AppCompatActivity {
         });
 
     }
+    public void Exit(View v)
+    {
+        startActivity(new Intent(this, Login.class));
+    }
+
 }

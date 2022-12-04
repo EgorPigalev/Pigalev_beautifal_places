@@ -5,12 +5,12 @@ import android.os.Parcelable;
 
 public class Mask implements Parcelable{
 
-    private int ID;
-    private String Name;
+    private int id_beautiful_place;
+    private String name;
 
     protected Mask(Parcel in) {
-        ID = in.readInt();
-        Name = in.readString();
+        id_beautiful_place = in.readInt();
+        name = in.readString();
     }
 
     public static final Creator<Mask> CREATOR = new Creator<Mask>() {
@@ -26,26 +26,26 @@ public class Mask implements Parcelable{
     };
 
     public void setID(int ID) {
-        this.ID = ID;
+        this.id_beautiful_place = ID;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
 
     public int getID() {
-        return ID;
+        return id_beautiful_place;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
 
     public Mask(int ID, String Name) {
-        this.ID = ID;
-        this.Name = Name;
+        this.id_beautiful_place = ID;
+        this.name = Name;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Mask implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(ID);
-        dest.writeString(Name);
+        dest.writeInt(id_beautiful_place);
+        dest.writeString(name);
     }
 }

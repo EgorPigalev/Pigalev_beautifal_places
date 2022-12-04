@@ -6,11 +6,6 @@
     app:startDestination="@id/menuTopPlacesFragment">
 
     <fragment
-        android:id="@+id/menuProfile"
-        android:name="com.example.pigalev_beautifal_places.ProfileFragment"
-        android:label="Личный кабинет"
-        tools:layout="@layout/fragment_profile" />
-    <fragment
         android:id="@+id/menuTopPlacesFragment"
         android:name="com.example.pigalev_beautifal_places.TopPlacesFragment"
         android:label="Топ-10 мест"
@@ -20,4 +15,24 @@
         android:name="com.example.pigalev_beautifal_places.AllPlacesFragment"
         android:label="Красивые места"
         tools:layout="@layout/fragment_all_places" />
+    <fragment
+        android:id="@+id/menuProfile"
+        android:name="com.example.pigalev_beautifal_places.ProfileFragment"
+        android:label="Личный кабинет"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/menuFovorites"
+        android:name="com.example.pigalev_beautifal_places.FovoritesFragment"
+        android:label="Избранное"
+        tools:layout="@layout/fragment_fovorites" />
+    <fragment
+        android:id="@+id/menuAboutUs"
+        android:name="com.example.pigalev_beautifal_places.aboutApplicationFragment"
+        android:label="О приложении"
+        tools:layout="@layout/fragment_about_application" />
+    <fragment
+        android:id="@+id/menuExitAccount"
+        android:name="com.example.pigalev_beautifal_places.ExitFragment"
+        android:label="fragment_exit"
+        tools:layout="@layout/fragment_exit" />
 </navigation>

@@ -13,9 +13,10 @@
         android:icon="@drawable/icon_favorites"
         android:title="Избранное"/>
 
-    <item android:id="@+id/menuAllPlaces"
+    <item
+        android:id="@+id/menuAllPlaces"
         android:icon="@drawable/icon_all_places"
-        android:title="Все места"/>
+        android:title="Все места" />
 
     <item android:title="Другие">
         <menu>
@@ -27,7 +28,7 @@
             <item
                 android:id="@+id/menuExitAccount"
                 android:icon="@drawable/exit_account"
-                android:title="Выйти из учетной записи"/>
+                android:title="Выйти из учетной записи" />
 
         </menu>
     </item>

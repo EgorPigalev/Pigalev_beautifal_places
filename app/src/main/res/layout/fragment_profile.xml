@@ -9,119 +9,143 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/colorHeader"
+            android:id="@+id/secondlyLayer"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/blue_light">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingBottom="10dp"
+            android:background="@drawable/secondly_layer_profile">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/firstLayer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                >
+                android:padding="20dp"
+                android:background="@drawable/first_layer_profile">
 
-                <ImageView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/imageProfile"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:src="@drawable/icon_profile"
-                    />
+                    app:cardCornerRadius="50dp"
+                    android:layout_margin="10dp">
+
+                    <ImageView
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:src="@drawable/ava"
+                        android:scaleType="centerCrop"
+                        />
+
+                </androidx.cardview.widget.CardView>
+
 
                 <TextView
                     android:id="@+id/nameProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="EgorPigalev"
+                    android:textSize="24dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_margin="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/imageProfile"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/countPlacesHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Колличество добавленных мест"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:layout_margin="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/firstLayer"
+                />
+
+            <TextView
+                android:id="@+id/countPlaces"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/countPlacesHeader"
+                android:text="3"
+                android:textSize="24dp"
+                android:textColor="@color/yellow_main"
+                />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvCountPlaces"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/colorHeader"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="-40dp"
-            android:background="@color/white">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/countPlacesHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Колличество добавленных мест"
-                    android:textSize="18dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/countPlaces"
-                    />
-
-                <TextView
-                    android:id="@+id/countPlaces"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:text="3"
-                    android:textSize="24dp"
-                    android:textColor="@color/blue_dark"
-                    />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <Button
-            android:id="@+id/btnChangeLoginAndPassword"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDeletePhoto"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="Изменить логин или пароль"
-            app:layout_constraintTop_toBottomOf="@+id/cvCountPlaces"
+            android:text="Удалить фотографию"
+            android:textColor="@drawable/button_text_color"
+            android:background="@drawable/button_style"
+            app:layout_constraintTop_toBottomOf="@+id/secondlyLayer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnChangeLoginAndPassword"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Изменить логин или пароль"
+            android:layout_margin="10dp"
+            android:textColor="@drawable/button_text_color"
+            android:background="@drawable/button_style"
+            app:layout_constraintTop_toBottomOf="@+id/btnDeletePhoto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnExitProfile"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Выйти из профиля"
+            android:onClick="Exit"
+            android:textColor="@drawable/button_text_color"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_style"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/btnDeleteProfile"
+            app:layout_constraintTop_toBottomOf="@+id/btnChangeLoginAndPassword"
             />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnDeleteProfile"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="Удалить профиль"
+            android:textColor="@drawable/button_text_color"
+            android:background="@drawable/button_style"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnExitProfile"
+            android:layout_margin="10dp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

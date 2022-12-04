@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -29,6 +31,7 @@ public class AllPlacesFragment extends Fragment {
     List<Mask> data;
     ListView listView;
     AdapterMask pAdapter;
+    TextView str;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,15 +71,19 @@ public class AllPlacesFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        String query = "Select id_beautiful_place, name From BeautifulPlace";
-        RequestExecution(query);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_all_places, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_all_places, container, false);
+        listView = v.findViewById(R.id.lvData);
+        String query = "Select id_beautiful_place, name From BeautifulPlace";
+        RequestExecution(query);
+        return v;
     }
 
     public void enterMobile() {
@@ -85,8 +92,7 @@ public class AllPlacesFragment extends Fragment {
     }
     public void RequestExecution(String query) {
         data = new ArrayList<Mask>();
-        listView = (ListView) getActivity().findViewById(R.id.lvData);
-        pAdapter = new AdapterMask(AllPlacesFragment.this.getContext(), data);
+        pAdapter = new AdapterMask(getActivity(), data);
         try {
             BaseData baseData = new BaseData();
             connection = baseData.connectionClass();
@@ -98,8 +104,8 @@ public class AllPlacesFragment extends Fragment {
                 while (resultSet.next())
                 {
                     Mask tempMask = new Mask
-                            (resultSet.getInt("ID"),
-                                    resultSet.getString("Name")
+                            (resultSet.getInt("id_beautiful_place"),
+                                    resultSet.getString("name")
                             );
                     data.add(tempMask);
                     pAdapter.notifyDataSetInvalidated();
@@ -114,6 +120,7 @@ public class AllPlacesFragment extends Fragment {
         catch (SQLException throwables)
         {
             throwables.printStackTrace();
+            Toast.makeText(getActivity(), "При выводе данных возникла ошибка", Toast.LENGTH_LONG).show();
         }
         enterMobile();
     }
