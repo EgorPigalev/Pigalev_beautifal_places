@@ -17,9 +17,9 @@
         tools:layout="@layout/fragment_all_places" />
     <fragment
         android:id="@+id/menuProfile"
-        android:name="com.example.pigalev_beautifal_places.ProfileFragment"
+        android:name="com.example.pigalev_beautifal_places.UserProfilePerehodFragment"
         android:label="Личный кабинет"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_user_profile_perehod" />
     <fragment
         android:id="@+id/menuFovorites"
         android:name="com.example.pigalev_beautifal_places.FovoritesFragment"
@@ -36,8 +36,9 @@
         android:label="Выход"
         tools:layout="@layout/fragment_exit" />
     <fragment
-        android:id="@+id/addPlace"
-        android:name="com.example.pigalev_beautifal_places.AddPlaceFragment"
-        android:label="Добавление нового места"
-        tools:layout="@layout/fragment_add_place" />
+        android:id="@+id/addPlaces"
+        android:name="com.example.pigalev_beautifal_places.UserPlacePerehodFragment"
+        android:label="Добавленные места"
+        tools:layout="@layout/fragment_user_place_perehod" />
+
 </navigation>

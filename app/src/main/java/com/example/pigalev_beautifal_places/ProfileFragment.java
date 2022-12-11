@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -73,8 +74,8 @@ public class ProfileFragment extends Fragment {
         return fragment;
     }
 
-    UserModel userModel;
-    Button deletePhoto, deleteUser;
+    public static UserModel userModel;
+    Button deletePhoto, deleteUser, updateUser;
     ProgressBar progressBar;
     TextView login, countPlaces;
     ImageView image;
@@ -121,6 +122,16 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 UpdatePicture();
+            }
+        });
+        updateUser = v.findViewById(R.id.btnChangeLoginAndPassword);
+        updateUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                UpdUserFragment fragment = new UpdUserFragment();
+                ft.replace(R.id.UserProfilePerehod, fragment);
+                ft.commit();
             }
         });
         callGetUser();
@@ -213,7 +224,7 @@ public class ProfileFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
-        Call<UserModel> call = retrofitAPI.updateImage(index, userModel);
+        Call<UserModel> call = retrofitAPI.updateUser(index, userModel);
         call.enqueue(new Callback<UserModel>() {
             @Override
             public void onResponse(Call<UserModel> call, Response<UserModel> response) {

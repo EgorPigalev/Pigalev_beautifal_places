@@ -9,7 +9,7 @@
         android:icon="@drawable/icon_profile"
         android:title="Профиль"/>
 
-    <item android:id="@+id/addPlace"
+    <item android:id="@+id/addPlaces"
         android:icon="@drawable/add_place"
         android:title="Добавленные места"/>
 

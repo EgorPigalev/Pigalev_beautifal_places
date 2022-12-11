@@ -70,7 +70,7 @@
                 android:id="@+id/countPlacesHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Колличество добавленных мест"
+                android:text="Количество добавленных мест"
                 android:textSize="18dp"
                 android:textColor="@color/black"
                 android:layout_margin="10dp"

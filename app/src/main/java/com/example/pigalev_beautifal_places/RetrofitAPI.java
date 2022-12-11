@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 public interface RetrofitAPI
 {
     @PUT("Users/{id}")
-    Call<UserModel> updateImage(@Path("id") int id, @Body UserModel userModel);
+    Call<UserModel> updateUser(@Path("id") int id, @Body UserModel userModel);
 
     @DELETE("Users/{id}")
     Call<Void> deleteUser(@Path("id") int id);
