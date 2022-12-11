@@ -18,9 +18,11 @@ public class UserModel
         this.login = login;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password)
+    {
         this.password = password;
     }
+
     public void setImage(String image) {
         this.image = image;
     }

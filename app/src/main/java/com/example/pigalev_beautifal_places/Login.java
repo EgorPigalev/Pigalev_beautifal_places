@@ -99,7 +99,6 @@ public class Login extends AppCompatActivity {
                 if (!response.isSuccessful()) {
                     Toast.makeText(Login.this, "При авторизации возникла ошибка", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.INVISIBLE);
-
                     return;
                 }
                 if(!response.body().equals(0))

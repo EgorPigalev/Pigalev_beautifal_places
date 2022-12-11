@@ -35,4 +35,9 @@
         android:name="com.example.pigalev_beautifal_places.ExitFragment"
         android:label="Выход"
         tools:layout="@layout/fragment_exit" />
+    <fragment
+        android:id="@+id/addPlace"
+        android:name="com.example.pigalev_beautifal_places.AddPlaceFragment"
+        android:label="Добавление нового места"
+        tools:layout="@layout/fragment_add_place" />
 </navigation>

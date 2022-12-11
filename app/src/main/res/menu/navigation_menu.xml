@@ -9,6 +9,10 @@
         android:icon="@drawable/icon_profile"
         android:title="Профиль"/>
 
+    <item android:id="@+id/addPlace"
+        android:icon="@drawable/add_place"
+        android:title="Добавленные места"/>
+
     <item android:id="@+id/menuFovorites"
         android:icon="@drawable/icon_favorites"
         android:title="Избранное"/>
