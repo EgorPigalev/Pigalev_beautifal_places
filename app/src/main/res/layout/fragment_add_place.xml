@@ -148,12 +148,24 @@
 
         </TableRow>
 
+        <EditText
+            android:id="@+id/etMultiLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:inputType="textMultiLine"
+            android:background="@drawable/fields_input"
+            android:hint="Описание туристического места"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/trCordinate"/>
+
         <ProgressBar
             android:id="@+id/pbLoading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
-            app:layout_constraintTop_toBottomOf="@+id/trCordinate"
+            app:layout_constraintTop_toBottomOf="@+id/etMultiLine"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
