@@ -101,6 +101,7 @@ public class Login extends AppCompatActivity {
                     progressBar.setVisibility(View.INVISIBLE);
                     return;
                 }
+
                 if(!response.body().equals(0))
                 {
                     Toast.makeText(Login.this, "Вы успешно авторизировались", Toast.LENGTH_SHORT).show();
