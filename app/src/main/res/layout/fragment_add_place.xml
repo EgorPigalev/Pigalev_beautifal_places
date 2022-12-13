@@ -160,12 +160,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/trCordinate"/>
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAddPlace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Добавить"
+            android:layout_margin="20dp"
+            android:textColor="@drawable/button_text_color"
+            android:background="@drawable/button_style"
+            app:layout_constraintTop_toBottomOf="@+id/etMultiLine"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
         <ProgressBar
             android:id="@+id/pbLoading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
-            app:layout_constraintTop_toBottomOf="@+id/etMultiLine"
+            app:layout_constraintTop_toBottomOf="@+id/btnAddPlace"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

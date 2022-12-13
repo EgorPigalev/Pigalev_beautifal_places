@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,6 +39,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,13 +93,13 @@ public class AddPlaceFragment extends Fragment {
         }
     }
 
-    Button btnBack;
+    Button btnBack, btnAddPlace;
     Spinner TypeLocality, Country;
     TextView delete;
     ImageView mainImage;
     String varcharPicture;
     ProgressBar loadingPB;
-    EditText etName, etLatitude, etLongitude;
+    EditText etName, etLatitude, etLongitude, etMultiLine;
 
     public void UpdatePicture()
     {
@@ -185,6 +192,20 @@ public class AddPlaceFragment extends Fragment {
                 etLatitude.setHint("");
             else
                 etLatitude.setHint("Широта");
+        });
+        etMultiLine = view.findViewById(R.id.etMultiLine);
+        etMultiLine.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus)
+                etMultiLine.setHint("");
+            else
+                etMultiLine.setHint("Описание туристического места");
+        });
+        btnAddPlace = view.findViewById(R.id.btnAddPlace);
+        btnAddPlace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                postDataBeautifulPlace(String.valueOf(etName.getText()), String.valueOf(etMultiLine.getText()), Main.index, Float.parseFloat(String.valueOf(etLatitude.getText())), Float.parseFloat(String.valueOf(etLongitude.getText())), varcharPicture, false);
+            }
         });
         TypeLocality = view.findViewById(R.id.spTypeLocality);
         new GetTypeLocality().execute();
@@ -289,5 +310,39 @@ public class AddPlaceFragment extends Fragment {
         varcharPicture = null;
         mainImage.setImageResource(R.drawable.absence);
         delete.setVisibility(View.INVISIBLE);
+    }
+
+    private void postDataBeautifulPlace(String name, String description, int id_user, float latitude, float longitude, String main_image, boolean accepted) {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+        BeautifulPlacesModel modal = new BeautifulPlacesModel(name, description, id_user, 0, 0, latitude, longitude, main_image, accepted);
+
+        String country = Country.getSelectedItem().toString();
+        String typeLocality = TypeLocality.getSelectedItem().toString();
+
+        Call<BeautifulPlacesModel> call = retrofitAPI.createBeautifulPlace(modal, country, typeLocality);
+
+        call.enqueue(new Callback<BeautifulPlacesModel>() {
+            @Override
+            public void onResponse(Call<BeautifulPlacesModel> call, Response<BeautifulPlacesModel> response) {
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(getActivity(), "При добавление нового туристического места возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Toast.makeText(getActivity(), "Туристическое место отправлено на проверку администратору системы", Toast.LENGTH_LONG).show();
+                loadingPB.setVisibility(View.INVISIBLE);
+            }
+            @Override
+            public void onFailure(Call<BeautifulPlacesModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "При добавление нового туристического места возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                loadingPB.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 }

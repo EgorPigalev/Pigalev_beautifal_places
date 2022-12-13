@@ -1,6 +1,7 @@
 package com.example.pigalev_beautifal_places;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,9 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,12 +35,11 @@ import java.util.List;
  */
 public class AllPlacesFragment extends Fragment {
 
-    View v;
-    Connection connection;
-    List<Mask> data;
+    private List<Mask> listBeautifulPlaces = new ArrayList<>();
+
     ListView listView;
     AdapterMask pAdapter;
-    TextView str;
+    ProgressBar loading;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,49 +87,68 @@ public class AllPlacesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View v = inflater.inflate(R.layout.fragment_all_places, container, false);
-        listView = v.findViewById(R.id.lvData);
-        String query = "Select id_beautiful_place, name From BeautifulPlace";
-        RequestExecution(query);
-        return v;
+        View view = inflater.inflate(R.layout.fragment_all_places, container, false);
+        loading = view.findViewById(R.id.pbLoading);
+        loading.setVisibility(View.VISIBLE);
+        ListView ivProducts = view.findViewById(R.id.lvData);
+        pAdapter = new AdapterMask(getActivity(), listBeautifulPlaces);
+        ivProducts.setAdapter(pAdapter);
+        listView = view.findViewById(R.id.lvData);
+        new GetBeutifulPlace().execute();
+
+        return view;
     }
 
-    public void enterMobile() {
-        pAdapter.notifyDataSetInvalidated();
-        listView.setAdapter(pAdapter);
-    }
-    public void RequestExecution(String query) {
-        data = new ArrayList<Mask>();
-        pAdapter = new AdapterMask(getActivity(), data);
-        try {
-            BaseData baseData = new BaseData();
-            connection = baseData.connectionClass();
-            if (connection != null)
-            {
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
 
-                while (resultSet.next())
+
+    private class GetBeutifulPlace extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/BeautifulPlaces");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+
+                while ((line = reader.readLine()) != null)
                 {
-                    Mask tempMask = new Mask
-                            (resultSet.getInt("id_beautiful_place"),
-                                    resultSet.getString("name")
-                            );
-                    data.add(tempMask);
+                    result.append(line);
+                }
+                return result.toString();
+            }
+            catch (Exception exception)
+            {
+                return null;
+            }
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try
+            {
+                listBeautifulPlaces.clear();
+                pAdapter.notifyDataSetInvalidated();
+                JSONArray tempArray = new JSONArray(s);
+                for (int i = 0;i<tempArray.length();i++)
+                {
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    Mask tempProduct = new Mask(
+                            productJson.getInt("id_beautiful_place"),
+                            productJson.getString("name"),
+                            productJson.getString("main_image")
+                    );
+                    listBeautifulPlaces.add(tempProduct);
                     pAdapter.notifyDataSetInvalidated();
                 }
-                connection.close();
+                loading.setVisibility(View.GONE);
             }
-            else
+            catch (Exception ignored)
             {
 
             }
         }
-        catch (SQLException throwables)
-        {
-            throwables.printStackTrace();
-            Toast.makeText(getActivity(), "При выводе данных возникла ошибка", Toast.LENGTH_LONG).show();
-        }
-        enterMobile();
     }
 }
