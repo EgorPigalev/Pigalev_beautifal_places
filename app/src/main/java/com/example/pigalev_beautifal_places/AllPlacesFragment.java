@@ -5,10 +5,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -94,8 +96,18 @@ public class AllPlacesFragment extends Fragment {
         pAdapter = new AdapterMask(getActivity(), listBeautifulPlaces);
         ivProducts.setAdapter(pAdapter);
         listView = view.findViewById(R.id.lvData);
-        new GetBeutifulPlace().execute();
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int index = (int)id;
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                SinglePlaceFragment fragment = new SinglePlaceFragment(index, "AllPlace");
+                ft.replace(R.id.AllPlacesPerehod, fragment);
+                ft.commit();
+            }
+        });
+        new GetBeutifulPlace().execute();
         return view;
     }
 

@@ -1,18 +1,28 @@
 package com.example.pigalev_beautifal_places;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SinglePlaceFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class SinglePlaceFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -24,8 +34,12 @@ public class SinglePlaceFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public SinglePlaceFragment() {
+    int id;
+    String fragment;
+    public SinglePlaceFragment(int id, String fragment) {
         // Required empty public constructor
+        this.id = id;
+        this.fragment = fragment;
     }
 
     /**
@@ -36,15 +50,11 @@ public class SinglePlaceFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment SinglePlaceFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static SinglePlaceFragment newInstance(String param1, String param2) {
-        SinglePlaceFragment fragment = new SinglePlaceFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
+    Button btnBack;
+    ProgressBar pbLoading;
+    TextView name, tvMultiLine, tvLatitude, tvLongitude;
+    ImageView image;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,6 +69,85 @@ public class SinglePlaceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_single_place, container, false);
+        View view = inflater.inflate(R.layout.fragment_single_place, container, false);
+        btnBack = view.findViewById(R.id.btnBack);
+        pbLoading = view.findViewById(R.id.pbLoading);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(fragment.equals("AllPlace"))
+                {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    AllPlacesFragment fragment = new AllPlacesFragment();
+                    ft.replace(R.id.AllPlacesPerehod, fragment);
+                    ft.commit();
+                }
+                if(fragment.equals("UserPlace"))
+                {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    UserPlacesFragment fragment = new UserPlacesFragment();
+                    ft.replace(R.id.perehodAddPlace, fragment);
+                    ft.commit();
+                }
+            }
+        });
+        name = view.findViewById(R.id.tvName);
+        image = view.findViewById(R.id.ivMainPicture);
+        tvMultiLine = view.findViewById(R.id.tvMultiLine);
+        tvLatitude = view.findViewById(R.id.tvLatitude);
+        tvLongitude = view.findViewById(R.id.tvLongitude);
+        callGetBeutifulPlace();
+        return view;
+    }
+
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
+    public void callGetBeutifulPlace()
+    {
+        pbLoading.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        Call<BeautifulPlacesModel> call = retrofitAPI.getDATABeautifulPlace(id);
+        call.enqueue(new Callback<BeautifulPlacesModel>() {
+            @Override
+            public void onResponse(Call<BeautifulPlacesModel> call, Response<BeautifulPlacesModel> response) {
+                pbLoading.setVisibility(View.INVISIBLE);
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(getActivity(), "При выводе данных возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                name.setText(response.body().getName());
+                if(response.body().getImage() == null)
+                {
+                    image.setImageResource(R.drawable.absence);
+                }
+                else
+                {
+                    Bitmap bitmap = StringToBitMap(response.body().getImage());
+                    image.setImageBitmap(bitmap);
+                }
+                tvMultiLine.setText(response.body().getDescription());
+                tvLatitude.setText(String.valueOf(response.body().getLatitude()));
+                tvLongitude.setText(String.valueOf(response.body().getLongitude()));
+            }
+            @Override
+            public void onFailure(Call<BeautifulPlacesModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "При выводе данных возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                pbLoading.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 }

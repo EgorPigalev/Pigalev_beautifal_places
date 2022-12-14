@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -98,6 +99,16 @@ public class UserPlacesFragment extends Fragment {
         pAdapter = new AdapterMask(getActivity(), listBeautifulPlaces);
         ivProducts.setAdapter(pAdapter);
         listView = view.findViewById(R.id.lvData);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int index = (int)id;
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                SinglePlaceFragment fragment = new SinglePlaceFragment(index, "UserPlace");
+                ft.replace(R.id.perehodAddPlace, fragment);
+                ft.commit();
+            }
+        });
         new GetBeutifulPlace().execute();
         return view;
     }

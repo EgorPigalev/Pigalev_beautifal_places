@@ -12,9 +12,9 @@
         tools:layout="@layout/fragment_top_places" />
     <fragment
         android:id="@+id/menuAllPlaces"
-        android:name="com.example.pigalev_beautifal_places.AllPlacesFragment"
+        android:name="com.example.pigalev_beautifal_places.AllPlacesPerehodFragment"
         android:label="Красивые места"
-        tools:layout="@layout/fragment_all_places" />
+        tools:layout="@layout/fragment_all_places_perehod" />
     <fragment
         android:id="@+id/menuProfile"
         android:name="com.example.pigalev_beautifal_places.UserProfilePerehodFragment"
