@@ -320,12 +320,12 @@ public class AddPlaceFragment extends Fragment {
                 .build();
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
 
-        BeautifulPlacesModel modal = new BeautifulPlacesModel(name, description, id_user, 0, 0, latitude, longitude, main_image, accepted);
+        BeautifulPlacesModel modal = new BeautifulPlacesModel(name, description, id_user, 1, 1, latitude, longitude, main_image, accepted);
 
         String country = Country.getSelectedItem().toString();
         String typeLocality = TypeLocality.getSelectedItem().toString();
 
-        Call<BeautifulPlacesModel> call = retrofitAPI.createBeautifulPlace(modal, country, typeLocality);
+        Call<BeautifulPlacesModel> call = retrofitAPI.createBeautifulPlace(modal, "Россия", "Горы");
 
         call.enqueue(new Callback<BeautifulPlacesModel>() {
             @Override

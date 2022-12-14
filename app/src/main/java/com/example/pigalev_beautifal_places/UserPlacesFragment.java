@@ -1,5 +1,6 @@
 package com.example.pigalev_beautifal_places;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,12 +71,18 @@ public class UserPlacesFragment extends Fragment {
         }
     }
 
+    private List<Mask> listBeautifulPlaces = new ArrayList<>();
+
+    ListView listView;
+    AdapterMask pAdapter;
+    ProgressBar loading;
     Button addPlace;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_user_places, container, false);
-        addPlace = (Button) v.findViewById(R.id.btnAddPlace);
+        View view = inflater.inflate(R.layout.fragment_user_places, container, false);
+        addPlace = (Button) view.findViewById(R.id.btnAddPlace);
         addPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +92,64 @@ public class UserPlacesFragment extends Fragment {
                 ft.commit();
             }
         });
-        return v;
+        loading = view.findViewById(R.id.pbLoading);
+        loading.setVisibility(View.VISIBLE);
+        ListView ivProducts = view.findViewById(R.id.lvData);
+        pAdapter = new AdapterMask(getActivity(), listBeautifulPlaces);
+        ivProducts.setAdapter(pAdapter);
+        listView = view.findViewById(R.id.lvData);
+        new GetBeutifulPlace().execute();
+        return view;
+    }
+
+    private class GetBeutifulPlace extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/BeautifulPlaces/"+ Main.index + "?b=" + true);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line = "";
+
+                while ((line = reader.readLine()) != null)
+                {
+                    result.append(line);
+                }
+                return result.toString();
+            }
+            catch (Exception exception)
+            {
+                return null;
+            }
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            try
+            {
+                listBeautifulPlaces.clear();
+                pAdapter.notifyDataSetInvalidated();
+                JSONArray tempArray = new JSONArray(s);
+                for (int i = 0;i<tempArray.length();i++)
+                {
+                    JSONObject productJson = tempArray.getJSONObject(i);
+                    Mask tempProduct = new Mask(
+                            productJson.getInt("id_beautiful_place"),
+                            productJson.getString("name"),
+                            productJson.getString("main_image")
+                    );
+                    listBeautifulPlaces.add(tempProduct);
+                    pAdapter.notifyDataSetInvalidated();
+                }
+                loading.setVisibility(View.GONE);
+            }
+            catch (Exception ignored)
+            {
+
+            }
+        }
     }
 }

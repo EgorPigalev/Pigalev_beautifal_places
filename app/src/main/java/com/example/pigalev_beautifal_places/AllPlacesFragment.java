@@ -106,7 +106,7 @@ public class AllPlacesFragment extends Fragment {
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                URL url = new URL("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/BeautifulPlaces");
+                URL url = new URL("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/BeautifulPlaces?b=" + true);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
