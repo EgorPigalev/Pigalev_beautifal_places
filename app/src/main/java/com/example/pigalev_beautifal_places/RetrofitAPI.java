@@ -20,7 +20,7 @@ public interface RetrofitAPI
     @GET("Users")
     Call<Integer> Login(@Query("login") String login, @Query("password") String password);
 
-    @GET("BeautifulPlaces")
+    @GET("Users")
     Call<Integer> getCountBeautifulPlaces(@Query("id_user") int id_user);
 
     @GET("Users")
@@ -37,5 +37,4 @@ public interface RetrofitAPI
 
     @POST("BeautifulPlaces")
     Call<BeautifulPlacesModel> createBeautifulPlace(@Body BeautifulPlacesModel beautifulPlacesModel, @Query("country") String country, @Query("type_locality") String type_locality);
-
 }

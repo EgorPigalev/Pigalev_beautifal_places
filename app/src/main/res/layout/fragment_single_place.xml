@@ -96,9 +96,9 @@
             android:id="@+id/tvLatitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:inputType="textMultiLine"
-            android:hint="Широта"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toEndOf="@id/tvCoordinates"
             app:layout_constraintTop_toBottomOf="@+id/vDivingLine"/>
 
@@ -106,9 +106,9 @@
             android:id="@+id/tvLongitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:inputType="textMultiLine"
-            android:hint="Долгота"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toEndOf="@id/tvLatitude"
             app:layout_constraintTop_toBottomOf="@+id/vDivingLine"/>
 

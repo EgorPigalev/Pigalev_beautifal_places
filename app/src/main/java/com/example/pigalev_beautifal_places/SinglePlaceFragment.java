@@ -1,7 +1,9 @@
 package com.example.pigalev_beautifal_places;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -54,7 +56,7 @@ public class SinglePlaceFragment extends Fragment {
     Button btnBack;
     ProgressBar pbLoading;
     TextView name, tvMultiLine, tvLatitude, tvLongitude;
-    ImageView image;
+    ImageView image, imageMap;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,13 @@ public class SinglePlaceFragment extends Fragment {
                     ft.replace(R.id.perehodAddPlace, fragment);
                     ft.commit();
                 }
+                if(fragment.equals("FavoritePlace"))
+                {
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    FovoritesFragment fragment = new FovoritesFragment();
+                    ft.replace(R.id.favoritePlacePerehod, fragment);
+                    ft.commit();
+                }
             }
         });
         name = view.findViewById(R.id.tvName);
@@ -96,6 +105,16 @@ public class SinglePlaceFragment extends Fragment {
         tvMultiLine = view.findViewById(R.id.tvMultiLine);
         tvLatitude = view.findViewById(R.id.tvLatitude);
         tvLongitude = view.findViewById(R.id.tvLongitude);
+        imageMap = view.findViewById(R.id.ivLocation);
+        imageMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("geo:" + tvLatitude.getText().toString() + "," + tvLongitude.getText().toString()));
+                startActivity(intent);
+            }
+        });
         callGetBeutifulPlace();
         return view;
     }

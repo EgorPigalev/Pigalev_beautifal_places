@@ -22,9 +22,9 @@
         tools:layout="@layout/fragment_user_profile_perehod" />
     <fragment
         android:id="@+id/menuFovorites"
-        android:name="com.example.pigalev_beautifal_places.FovoritesFragment"
+        android:name="com.example.pigalev_beautifal_places.FavoritesPlacePerehodFragment"
         android:label="Избранное"
-        tools:layout="@layout/fragment_fovorites" />
+        tools:layout="@layout/fragment_favorites_place_perehod" />
     <fragment
         android:id="@+id/menuAboutUs"
         android:name="com.example.pigalev_beautifal_places.aboutApplicationFragment"
