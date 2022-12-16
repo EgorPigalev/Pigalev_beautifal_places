@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.InputType;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,8 +56,8 @@ public class SinglePlaceFragment extends Fragment {
 
     Button btnBack;
     ProgressBar pbLoading;
-    TextView name, tvMultiLine, tvLatitude, tvLongitude;
-    ImageView image, imageMap;
+    TextView name, tvMultiLine, tvLatitude, tvLongitude, tvTypeLocality, tvCountry, tvAutor;
+    ImageView image, imageMap, imageLike;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,7 +101,10 @@ public class SinglePlaceFragment extends Fragment {
                 }
             }
         });
+        tvCountry = view.findViewById(R.id.tbAddress);
+        tvTypeLocality = view.findViewById(R.id.tbTypeLocality);
         name = view.findViewById(R.id.tvName);
+        tvAutor = view.findViewById(R.id.tvAutor);
         image = view.findViewById(R.id.ivMainPicture);
         tvMultiLine = view.findViewById(R.id.tvMultiLine);
         tvLatitude = view.findViewById(R.id.tvLatitude);
@@ -115,7 +119,24 @@ public class SinglePlaceFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        imageLike = view.findViewById(R.id.ivLike);
+        imageLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(imageLike.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.icon_like_not_click).getConstantState())
+                {
+                    imageLike.setImageResource(R.drawable.icon_like_click);
+                    postGrades();
+                }
+                else
+                {
+                    imageLike.setImageResource(R.drawable.icon_like_not_click);
+                    callDeleteGrades();
+                }
+            }
+        });
         callGetBeutifulPlace();
+        callGrades();
         return view;
     }
 
@@ -128,6 +149,99 @@ public class SinglePlaceFragment extends Fragment {
             e.getMessage();
             return null;
         }
+    }
+
+    public void callGrades()
+    {
+        pbLoading.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        Call<Boolean> call = retrofitAPI.getProverkaGrades(id, Main.index);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                pbLoading.setVisibility(View.INVISIBLE);
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(getActivity(), "При проверки понравившегося места возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(response.body().equals(false))
+                {
+                    imageLike.setImageResource(R.drawable.icon_like_not_click);
+
+                }
+                else
+                {
+                    imageLike.setImageResource(R.drawable.icon_like_click);
+                }
+            }
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Toast.makeText(getActivity(), "При проверки понравившегося места возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                pbLoading.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    private void callDeleteGrades() {
+
+        pbLoading.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        Call call = retrofitAPI.deleteGrades(id, Main.index);
+        call.enqueue(new Callback<DataModal>() {
+            @Override
+            public void onResponse(Call<DataModal> call, Response<DataModal> response) {
+                pbLoading.setVisibility(View.INVISIBLE);
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(getActivity(), "При снятие пометки нравится возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            @Override
+            public void onFailure(Call<DataModal> call, Throwable t) {
+                Toast.makeText(getActivity(), "При снятие пометки нравится возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                pbLoading.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    private void postGrades() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+        FavoritesModel modal = new FavoritesModel(0, Main.index, id);
+
+        Call<GradesModel> call = retrofitAPI.createGrades(modal);
+
+        call.enqueue(new Callback<GradesModel>() {
+            @Override
+            public void onResponse(Call<GradesModel> call, Response<GradesModel> response) {
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(getActivity(), "При пометке нравится возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                pbLoading.setVisibility(View.INVISIBLE);
+            }
+            @Override
+            public void onFailure(Call<GradesModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "При пометке нравится возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                pbLoading.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     public void callGetBeutifulPlace()
@@ -161,10 +275,96 @@ public class SinglePlaceFragment extends Fragment {
                 tvMultiLine.setText(response.body().getDescription());
                 tvLatitude.setText(String.valueOf(response.body().getLatitude()));
                 tvLongitude.setText(String.valueOf(response.body().getLongitude()));
+                callGetTypeLocality(response.body().getId_type_locality());
+                callGetAddress(response.body().getId_address());
+                callGetUserAutor(response.body().getId_user());
             }
             @Override
             public void onFailure(Call<BeautifulPlacesModel> call, Throwable t) {
                 Toast.makeText(getActivity(), "При выводе данных возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                pbLoading.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+    public void callGetTypeLocality(int id_type_locality)
+    {
+        pbLoading.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        Call<TypeLocalityModel> call = retrofitAPI.getTypeLocality(id_type_locality);
+        call.enqueue(new Callback<TypeLocalityModel>() {
+            @Override
+            public void onResponse(Call<TypeLocalityModel> call, Response<TypeLocalityModel> response) {
+                pbLoading.setVisibility(View.INVISIBLE);
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(getActivity(), "При выводе типа достопримечательности возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                tvTypeLocality.setText(String.valueOf(response.body().getType_locality()));
+            }
+            @Override
+            public void onFailure(Call<TypeLocalityModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "При выводе типа достопримечательности возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                pbLoading.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    public void callGetAddress(int id_address)
+    {
+        pbLoading.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        Call<AddressModel> call = retrofitAPI.getAddress(id_address);
+        call.enqueue(new Callback<AddressModel>() {
+            @Override
+            public void onResponse(Call<AddressModel> call, Response<AddressModel> response) {
+                pbLoading.setVisibility(View.INVISIBLE);
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(getActivity(), "При выводе страны расположения возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                tvCountry.setText("Страна: " + response.body().getAddress());
+            }
+            @Override
+            public void onFailure(Call<AddressModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "При выводе страны расположения возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                pbLoading.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+    public void callGetUserAutor(int id)
+    {
+        pbLoading.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        Call<UserModel> autor = retrofitAPI.getDATAUser(id);
+        autor.enqueue(new Callback<UserModel>() {
+            @Override
+            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                pbLoading.setVisibility(View.INVISIBLE);
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(getActivity(), "При опредление автора возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                tvAutor.setText("Автор: " + response.body().getLogin());
+            }
+
+            @Override
+            public void onFailure(Call<UserModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "При опредление автора возникла ошибка", Toast.LENGTH_SHORT).show();
                 pbLoading.setVisibility(View.INVISIBLE);
             }
         });

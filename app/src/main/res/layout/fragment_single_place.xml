@@ -50,14 +50,31 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnBack"/>
 
+        <TextView
+            android:id="@+id/tbTypeLocality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <ImageView
             android:id="@+id/ivMainPicture"
-            android:layout_width="300dp"
+            android:layout_width="400dp"
             android:layout_height="300dp"
             android:src="@drawable/absence"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvName" />
+            app:layout_constraintTop_toBottomOf="@+id/tbTypeLocality" />
+
+        <TextView
+            android:id="@+id/tbAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/ivMainPicture"
+            app:layout_constraintStart_toStartOf="parent" />
+
 
         <TextView
             android:id="@+id/tvMultiLine"
@@ -69,7 +86,7 @@
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivMainPicture"/>
+            app:layout_constraintTop_toBottomOf="@+id/tbAddress"/>
 
         <View
             android:id="@+id/vDivingLine"
@@ -117,7 +134,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:inputType="textMultiLine"
             android:hint="Автор:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCoordinates"/>
@@ -155,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:src="@drawable/icon_like"/>
+                android:src="@drawable/icon_like_not_click"/>
 
         </TableRow>
 
