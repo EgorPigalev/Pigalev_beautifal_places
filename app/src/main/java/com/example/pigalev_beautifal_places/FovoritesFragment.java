@@ -139,7 +139,7 @@ public class FovoritesFragment extends Fragment {
                     Mask tempProduct = new Mask(
                             productJson.getInt("id_beautiful_place"),
                             productJson.getString("name"),
-                            productJson.getString("main_image")
+                            productJson.getString("image")
                     );
                     listBeautifulPlaces.add(tempProduct);
                     pAdapter.notifyDataSetInvalidated();

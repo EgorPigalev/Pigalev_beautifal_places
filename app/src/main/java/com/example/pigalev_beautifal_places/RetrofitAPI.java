@@ -36,5 +36,5 @@ public interface RetrofitAPI
     Call<BeautifulPlacesModel> getDATABeautifulPlace(@Query("id") int id);
 
     @POST("BeautifulPlaces")
-    Call<BeautifulPlacesModel> createBeautifulPlace(@Body BeautifulPlacesModel beautifulPlacesModel, @Query("country") String country, @Query("type_locality") String type_locality);
+    Call<BeautifulPlacesModel> createBeautifulPlace(@Body BeautifulPlacesModel beautifulPlacesModel);
 }

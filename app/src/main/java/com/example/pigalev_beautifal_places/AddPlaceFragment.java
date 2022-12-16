@@ -214,6 +214,9 @@ public class AddPlaceFragment extends Fragment {
         return view;
     }
 
+    String[][] type_localityArray;
+    String[][] countryArray;
+
     private class GetTypeLocality extends AsyncTask<Void, Void, String> {
 
         @Override
@@ -244,10 +247,13 @@ public class AddPlaceFragment extends Fragment {
             {
                 JSONArray tempArray = new JSONArray(s);
                 String[] str_array = new String[tempArray.length()];
+                type_localityArray = new String[tempArray.length()][2];
                 for (int i = 0;i<tempArray.length();i++)
                 {
                     JSONObject productJson = tempArray.getJSONObject(i);
                     str_array[i]=productJson.getString("type_locality");
+                    type_localityArray[i][0] = productJson.getString("id_type_locality");
+                    type_localityArray[i][1] = productJson.getString("type_locality");
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 TypeLocality.setAdapter(adapter);
@@ -289,10 +295,13 @@ public class AddPlaceFragment extends Fragment {
             {
                 JSONArray tempArray = new JSONArray(s);
                 String[] str_array = new String[tempArray.length()];
+                countryArray = new String[tempArray.length()][2];
                 for (int i = 0;i<tempArray.length();i++)
                 {
                     JSONObject productJson = tempArray.getJSONObject(i);
                     str_array[i]=productJson.getString("country");
+                    countryArray[i][0] = productJson.getString("id_address");
+                    countryArray[i][1] = productJson.getString("country");
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, str_array);
                 Country.setAdapter(adapter);
@@ -312,7 +321,7 @@ public class AddPlaceFragment extends Fragment {
         delete.setVisibility(View.INVISIBLE);
     }
 
-    private void postDataBeautifulPlace(String name, String description, int id_user, float latitude, float longitude, String main_image, boolean accepted) {
+    private void postDataBeautifulPlace(String name, String description, int id_user, float latitude, float longitude, String image, boolean accepted) {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/")
@@ -320,12 +329,12 @@ public class AddPlaceFragment extends Fragment {
                 .build();
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
 
-        BeautifulPlacesModel modal = new BeautifulPlacesModel(name, description, id_user, 1, 1, latitude, longitude, main_image, accepted);
-
         String country = Country.getSelectedItem().toString();
         String typeLocality = TypeLocality.getSelectedItem().toString();
 
-        Call<BeautifulPlacesModel> call = retrofitAPI.createBeautifulPlace(modal, "Россия", "Горы");
+        BeautifulPlacesModel modal = new BeautifulPlacesModel(name, description, id_user, getIdCountry(country), getIdTypeLocality(typeLocality), latitude, longitude, image, accepted);
+
+        Call<BeautifulPlacesModel> call = retrofitAPI.createBeautifulPlace(modal);
 
         call.enqueue(new Callback<BeautifulPlacesModel>() {
             @Override
@@ -345,4 +354,29 @@ public class AddPlaceFragment extends Fragment {
             }
         });
     }
+
+    private int getIdTypeLocality(String typeLocality)
+    {
+        for (int i = 0; i < type_localityArray.length; i++)
+        {
+            if(type_localityArray[i][1].equals(typeLocality))
+            {
+                return Integer.parseInt(type_localityArray[i][0]);
+            }
+        }
+        return 0;
+    }
+
+    private int getIdCountry(String country)
+    {
+        for (int i = 0; i < countryArray.length; i++)
+        {
+            if(countryArray[i][1].equals(country))
+            {
+                return Integer.parseInt(countryArray[i][0]);
+            }
+        }
+        return 0;
+    }
+
 }
