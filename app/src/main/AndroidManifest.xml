@@ -16,6 +16,12 @@
         android:theme="@style/Theme.Pigalev_beautifal_places"
         tools:targetApi="31">
         <activity
+            android:name=".UpdDataAdmin"
+            android:exported="false" />
+        <activity
+            android:name=".FuncAdmin"
+            android:exported="false" />
+        <activity
             android:name=".RecoverPassword"
             android:exported="false">
             <meta-data

@@ -6,17 +6,31 @@
     android:layout_height="match_parent"
     android:layout_margin="10dp"
     android:fillViewport="true"
-    tools:context=".AllPlacesFragment">
+    tools:context=".FuncAdmin">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_style"
+            android:text="Назад"
+            android:textAllCaps="false"
+            android:textColor="@drawable/button_text_color"
+            android:textSize="17dp"
+            android:onClick="back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
         <androidx.appcompat.widget.SearchView
             android:id="@+id/svSearchName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnBack"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ivOpenSearch"
             />
@@ -103,6 +117,7 @@
                 />
 
             <TableRow
+                android:id="@+id/trSorting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -134,6 +149,43 @@
                     android:entries="@array/order" />
 
             </TableRow>
+
+            <RadioGroup
+                android:id="@+id/toggle"
+                android:checkedButton="@+id/offer"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/pink_out_line"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/trSorting">
+
+                <RadioButton
+                    android:id="@+id/search"
+                    android:background="@drawable/toggle_widget_background"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:onClick="changeNew"
+                    android:text="Принять новые"
+                    android:textColor="@color/black" />
+
+                <RadioButton
+                    android:id="@+id/offer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/toggle_widget_background"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:onClick="changeOld"
+                    android:text="Изменить старые"
+                    android:textColor="@color/black" />
+            </RadioGroup>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

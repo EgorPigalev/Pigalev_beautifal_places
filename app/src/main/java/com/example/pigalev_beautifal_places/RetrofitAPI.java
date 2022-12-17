@@ -18,7 +18,7 @@ public interface RetrofitAPI
     Call<Void> deleteUser(@Path("id") int id);
 
     @GET("Users")
-    Call<Integer> Login(@Query("login") String login, @Query("password") String password);
+    Call<UserModel> Login(@Query("login") String login, @Query("password") String password);
 
     @GET("Users")
     Call<Integer> getCountBeautifulPlaces(@Query("id_user") int id_user);
@@ -61,4 +61,10 @@ public interface RetrofitAPI
 
     @DELETE("Grades/deleteGrades")
     Call<Void> deleteGrades(@Query("id_beautifulPlace") int id_beautifulPlace, @Query("id_user") int id_user);
+
+    @PUT("BeautifulPlaces")
+    Call<BeautifulPlacesModel> updateBeautifulPlace(@Query("id") int id, @Body BeautifulPlacesModel beautifulPlacesModel);
+
+    @DELETE("BeautifulPlaces/{id}")
+    Call<Void> deleteBeautifulPlaces(@Path("id") int id);
 }

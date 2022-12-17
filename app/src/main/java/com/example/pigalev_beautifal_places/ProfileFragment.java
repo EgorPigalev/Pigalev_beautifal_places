@@ -195,7 +195,7 @@ public class ProfileFragment extends Fragment {
                     Toast.makeText(getActivity(), "При выводе данных возникла ошибка", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                userModel = new UserModel(response.body().getLogin(), response.body().getPassword(), response.body().getImage(), response.body().getId_role());
+                userModel = new UserModel(0, response.body().getLogin(), response.body().getPassword(), response.body().getImage(), response.body().getId_role());
                 login.setText(response.body().getLogin());
                 if(response.body().getImage() == null)
                 {

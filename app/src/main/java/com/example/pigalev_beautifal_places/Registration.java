@@ -162,7 +162,7 @@ public class Registration extends AppCompatActivity {
                 .build();
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
 
-        UserModel modal = new UserModel(login, password, null, 2);
+        UserModel modal = new UserModel(0, login, password, null, 2);
 
         Call<UserModel> call = retrofitAPI.createUser(modal);
 

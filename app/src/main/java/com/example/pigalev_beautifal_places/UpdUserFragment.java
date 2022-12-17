@@ -184,16 +184,16 @@ public class UpdUserFragment extends Fragment {
                 .build();
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
         String confirmPassword = String.valueOf(etConfirmPassword.getText());
-        Call<Integer> call = retrofitAPI.Login(user.getLogin(), confirmPassword);
-        call.enqueue(new Callback<Integer>() {
+        Call<UserModel> call = retrofitAPI.Login(user.getLogin(), confirmPassword);
+        call.enqueue(new Callback<UserModel>() {
             @Override
-            public void onResponse(Call<Integer> call, Response<Integer> response) {
+            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(getActivity(), "При проверке пароля возникла ошибка", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.INVISIBLE);
                     return;
                 }
-                if(!response.body().equals(0))
+                if(!response.body().equals(null))
                 {
                     if(!ProfileFragment.userModel.getLogin().equals(String.valueOf(etLogin.getText())))
                     {
@@ -212,7 +212,7 @@ public class UpdUserFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Integer> call, Throwable t) {
+            public void onFailure(Call<UserModel> call, Throwable t) {
                 Toast.makeText(getActivity(), "При проверке пароля возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.INVISIBLE);
             }

@@ -92,25 +92,33 @@ public class Login extends AppCompatActivity {
                 .build();
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
 
-        Call<Integer> call = retrofitAPI.Login(login, password);
-        call.enqueue(new Callback<Integer>() {
+        Call<UserModel> call = retrofitAPI.Login(login, password);
+        call.enqueue(new Callback<UserModel>() {
             @Override
-            public void onResponse(Call<Integer> call, Response<Integer> response) {
+            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(Login.this, "При авторизации возникла ошибка", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.INVISIBLE);
                     return;
                 }
-
-                if(!response.body().equals(0))
+                progressBar.setVisibility(View.INVISIBLE);
+                if(!response.body().equals(null))
                 {
-                    Toast.makeText(Login.this, "Вы успешно авторизировались", Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.INVISIBLE);
-                    Intent intent = new Intent(Login.this, Main.class);
-                    Bundle b = new Bundle();
-                    b.putInt("key", response.body());
-                    intent.putExtras(b);
-                    startActivity(intent);
+                    if(response.body().getId_role() == 2)
+                    {
+                        Toast.makeText(Login.this, "Вы успешно авторизировались", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Login.this, Main.class);
+                        Bundle b = new Bundle();
+                        b.putInt("key", response.body().getId_user());
+                        intent.putExtras(b);
+                        startActivity(intent);
+                    }
+                    else
+                    {
+                        Toast.makeText(Login.this, "Вы вошли как администратор", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Login.this, FuncAdmin.class);
+                        startActivity(intent);
+                    }
                 }
                 else
                 {
@@ -120,7 +128,7 @@ public class Login extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Integer> call, Throwable t) {
+            public void onFailure(Call<UserModel> call, Throwable t) {
                 Toast.makeText(Login.this, "При авторизации возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.INVISIBLE);
             }
