@@ -5,4 +5,14 @@
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
     <string name="nameProject">World tourism</string>
+    <string name="delete_search">Удалить сортировку и поиск</string>
+    <string-array name="fieldsNameSearch">
+        <item></item>
+        <item>По наименованию</item>
+        <item>По популярности</item>
+    </string-array>
+    <string-array name="order">
+        <item>Возрастание</item>
+        <item>Убывание</item>
+    </string-array>
 </resources>

@@ -54,11 +54,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
 
     implementation "androidx.lifecycle:lifecycle-extensions:$arch_version"
-    // Material Design
-    //implementation 'com.google.android.material:compose-theme-adapter:1.2.0-alpha02'
 
-    // Rounded Image View
-    //implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'com.google.android.material:material:1.2.0-alpha02'
+
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 
     // Navigation Component
     //implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0-rc03'
