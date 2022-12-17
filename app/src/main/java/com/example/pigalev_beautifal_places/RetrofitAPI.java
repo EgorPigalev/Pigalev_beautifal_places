@@ -50,7 +50,7 @@ public interface RetrofitAPI
     @POST("Favorites")
     Call<FavoritesModel> createFavorite(@Body FavoritesModel favoritesModel);
 
-    @DELETE("Favorites")
+    @DELETE("Favorites/deleteFavorite")
     Call<Void> deleteFavorite(@Query("id_beautifulPlace") int id_beautifulPlace, @Query("id_user") int id_user);
 
     @GET("Grades/proverkaGrades")

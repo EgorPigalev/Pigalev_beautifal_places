@@ -13,7 +13,7 @@
     <fragment
         android:id="@+id/menuAllPlaces"
         android:name="com.example.pigalev_beautifal_places.AllPlacesPerehodFragment"
-        android:label="Красивые места"
+        android:label="Туристические места"
         tools:layout="@layout/fragment_all_places_perehod" />
     <fragment
         android:id="@+id/menuProfile"
@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/addPlaces"
         android:name="com.example.pigalev_beautifal_places.UserPlacePerehodFragment"
-        android:label="Добавленные места"
+        android:label="Добавленные туристические места"
         tools:layout="@layout/fragment_user_place_perehod" />
 
 </navigation>

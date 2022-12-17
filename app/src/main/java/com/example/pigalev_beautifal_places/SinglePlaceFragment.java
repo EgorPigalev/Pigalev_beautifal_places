@@ -57,7 +57,7 @@ public class SinglePlaceFragment extends Fragment {
     Button btnBack;
     ProgressBar pbLoading;
     TextView name, tvMultiLine, tvLatitude, tvLongitude, tvTypeLocality, tvCountry, tvAutor;
-    ImageView image, imageMap, imageLike;
+    ImageView image, imageMap, imageLike, imFavorite;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -135,8 +135,25 @@ public class SinglePlaceFragment extends Fragment {
                 }
             }
         });
+        imFavorite = view.findViewById(R.id.ivFavorite);
+        imFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(imFavorite.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.icon_not_favorites).getConstantState())
+                {
+                    imFavorite.setImageResource(R.drawable.icon_favorites);
+                    postFavorite();
+                }
+                else
+                {
+                    imFavorite.setImageResource(R.drawable.icon_not_favorites);
+                    callDeleteFavorite();
+                }
+            }
+        });
         callGetBeutifulPlace();
         callGrades();
+        callFavorite();
         return view;
     }
 
@@ -222,7 +239,7 @@ public class SinglePlaceFragment extends Fragment {
                 .build();
         RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
 
-        FavoritesModel modal = new FavoritesModel(0, Main.index, id);
+        FavoritesModel modal = new FavoritesModel(Main.index, id);
 
         Call<GradesModel> call = retrofitAPI.createGrades(modal);
 
@@ -239,6 +256,99 @@ public class SinglePlaceFragment extends Fragment {
             @Override
             public void onFailure(Call<GradesModel> call, Throwable t) {
                 Toast.makeText(getActivity(), "При пометке нравится возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                pbLoading.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    public void callFavorite()
+    {
+        pbLoading.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        Call<Boolean> call = retrofitAPI.getProverkaFavorite(id, Main.index);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                pbLoading.setVisibility(View.INVISIBLE);
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(getActivity(), "При определение избранное возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(response.body().equals(false))
+                {
+                    imFavorite.setImageResource(R.drawable.icon_not_favorites);
+
+                }
+                else
+                {
+                    imFavorite.setImageResource(R.drawable.icon_favorites);
+                }
+            }
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Toast.makeText(getActivity(), "При определение избранное возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                pbLoading.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    private void callDeleteFavorite() {
+
+        pbLoading.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        Call call = retrofitAPI.deleteFavorite(id, Main.index);
+        call.enqueue(new Callback<DataModal>() {
+            @Override
+            public void onResponse(Call<DataModal> call, Response<DataModal> response) {
+                pbLoading.setVisibility(View.INVISIBLE);
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(getActivity(), "При снятие пометки избранное возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            @Override
+            public void onFailure(Call<DataModal> call, Throwable t) {
+                Toast.makeText(getActivity(), "При снятие пометки избранное возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                pbLoading.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    private void postFavorite() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+
+        FavoritesModel modal = new FavoritesModel(Main.index, id);
+
+        Call<FavoritesModel> call = retrofitAPI.createFavorite(modal);
+
+        call.enqueue(new Callback<FavoritesModel>() {
+            @Override
+            public void onResponse(Call<FavoritesModel> call, Response<FavoritesModel> response) {
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(getActivity(), "При пометке избранное возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                pbLoading.setVisibility(View.INVISIBLE);
+            }
+            @Override
+            public void onFailure(Call<FavoritesModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "При пометке избранное возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
                 pbLoading.setVisibility(View.INVISIBLE);
             }
         });

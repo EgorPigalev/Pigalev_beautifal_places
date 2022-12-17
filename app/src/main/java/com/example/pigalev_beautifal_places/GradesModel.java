@@ -5,7 +5,7 @@ public class GradesModel
     private int id_user;
     private int id_beautiful_place;
 
-    public GradesModel(int id_davorites, int id_user, int id_beautiful_place)
+    public GradesModel(int id_user, int id_beautiful_place)
     {
         this.id_user = id_user;
         this.id_beautiful_place = id_beautiful_place;

@@ -33,7 +33,7 @@
                 android:id="@+id/programName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Красивые места"
+                android:text="@string/nameProject"
                 android:textColor="@color/yellow_main"
                 android:textSize="32dp"
                 android:textStyle="bold"
