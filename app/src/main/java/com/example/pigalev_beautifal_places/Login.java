@@ -102,7 +102,7 @@ public class Login extends AppCompatActivity {
                     return;
                 }
                 progressBar.setVisibility(View.INVISIBLE);
-                if(!response.body().equals(null))
+                if(response.body() != null)
                 {
                     if(response.body().getId_role() == 2)
                     {

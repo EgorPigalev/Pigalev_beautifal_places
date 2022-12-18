@@ -46,7 +46,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UpdDataAdmin extends AppCompatActivity {
 
-    Button btnBack;
+    Button btnBack, btnUpd;
     Spinner TypeLocality, Country;
     TextView delete;
     ImageView mainImage;
@@ -149,6 +149,7 @@ public class UpdDataAdmin extends AppCompatActivity {
             else
                 etMultiLine.setHint("Описание туристического места");
         });
+        btnUpd = findViewById(R.id.btnUpdate);
         callGetDataMethod();
     }
 
@@ -287,6 +288,10 @@ public class UpdDataAdmin extends AppCompatActivity {
                     Bitmap bitmap = StringToBitMap(response.body().getImage());
                     mainImage.setImageBitmap(bitmap);
                     delete.setVisibility(View.VISIBLE);
+                }
+                if(response.body().getBit() == false)
+                {
+                    btnUpd.setText("Принять");
                 }
             }
             @Override

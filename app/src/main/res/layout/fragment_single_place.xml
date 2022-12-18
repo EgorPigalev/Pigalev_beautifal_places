@@ -166,12 +166,31 @@
                 android:layout_weight="1"
                 android:src="@drawable/icon_location"/>
 
-            <ImageView
-                android:id="@+id/ivLike"
+            <TableRow
+                android:id="@+id/trLike"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:src="@drawable/icon_like_not_click"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tvCountLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="2"
+                    android:textAlignment="textEnd"
+                    android:textSize="24dp"
+                    android:src="@drawable/icon_location"/>
+
+
+                <ImageView
+                    android:id="@+id/ivLike"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/icon_like_not_click"/>
+
+            </TableRow>
 
         </TableRow>
 

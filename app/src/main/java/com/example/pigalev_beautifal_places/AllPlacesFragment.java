@@ -63,6 +63,7 @@ public class AllPlacesFragment extends Fragment {
     ConstraintLayout settings;
     SearchView name;
     String textSearch;
+    int i1 = 0, i2 = 0, i3 = 0, i4 = 0;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -118,7 +119,11 @@ public class AllPlacesFragment extends Fragment {
         fieldSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                new GetBeutifulPlace().execute();
+                if(i1 > 0)
+                {
+                    new GetBeutifulPlace().execute();
+                }
+                i1++;
             }
 
             @Override
@@ -130,7 +135,11 @@ public class AllPlacesFragment extends Fragment {
         order.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                new GetBeutifulPlace().execute();
+                if(i2 > 0)
+                {
+                    new GetBeutifulPlace().execute();
+                }
+                i2++;
             }
 
             @Override
@@ -170,7 +179,11 @@ public class AllPlacesFragment extends Fragment {
         TypeLocality.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                new GetBeutifulPlace().execute();
+                if(i3 > 0)
+                {
+                    new GetBeutifulPlace().execute();
+                }
+                i3++;
             }
 
             @Override
@@ -182,7 +195,11 @@ public class AllPlacesFragment extends Fragment {
         Country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                new GetBeutifulPlace().execute();
+                if(i4 > 0)
+                {
+                    new GetBeutifulPlace().execute();
+                }
+                i4++;
             }
 
             @Override

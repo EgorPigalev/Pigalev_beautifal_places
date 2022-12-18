@@ -56,7 +56,7 @@ public class SinglePlaceFragment extends Fragment {
 
     Button btnBack;
     ProgressBar pbLoading;
-    TextView name, tvMultiLine, tvLatitude, tvLongitude, tvTypeLocality, tvCountry, tvAutor;
+    TextView name, tvMultiLine, tvLatitude, tvLongitude, tvTypeLocality, tvCountry, tvAutor, countGrades;
     ImageView image, imageMap, imageLike, imFavorite;
 
     @Override
@@ -101,6 +101,8 @@ public class SinglePlaceFragment extends Fragment {
                 }
             }
         });
+        countGrades = view.findViewById(R.id.tvCountLike);
+        callCountLike();
         tvCountry = view.findViewById(R.id.tbAddress);
         tvTypeLocality = view.findViewById(R.id.tbTypeLocality);
         name = view.findViewById(R.id.tvName);
@@ -222,6 +224,7 @@ public class SinglePlaceFragment extends Fragment {
                     Toast.makeText(getActivity(), "При снятие пометки нравится возникла ошибка", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                callCountLike();
             }
             @Override
             public void onFailure(Call<DataModal> call, Throwable t) {
@@ -252,10 +255,39 @@ public class SinglePlaceFragment extends Fragment {
                     return;
                 }
                 pbLoading.setVisibility(View.INVISIBLE);
+                callCountLike();
             }
             @Override
             public void onFailure(Call<GradesModel> call, Throwable t) {
                 Toast.makeText(getActivity(), "При пометке нравится возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                pbLoading.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    public void callCountLike()
+    {
+        pbLoading.setVisibility(View.VISIBLE);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        Call<Integer> call = retrofitAPI.getCountGrades(id);
+        call.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                pbLoading.setVisibility(View.INVISIBLE);
+                if(!response.isSuccessful())
+                {
+                    Toast.makeText(getActivity(), "При определение количества лайков возникла ошибка", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                countGrades.setText(response.body().toString());
+            }
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                Toast.makeText(getActivity(), "При определение количества лайков возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
                 pbLoading.setVisibility(View.INVISIBLE);
             }
         });

@@ -56,6 +56,9 @@ public interface RetrofitAPI
     @GET("Grades/proverkaGrades")
     Call<Boolean> getProverkaGrades(@Query("id_beautifulPlace") int id_beautifulPlace, @Query("id_user") int id_user);
 
+    @GET("Grades/countGrades")
+    Call<Integer> getCountGrades(@Query("id_beautifulPlace") int id_beautifulPlace);
+
     @POST("Grades")
     Call<GradesModel> createGrades(@Body FavoritesModel favoritesModel);
 
