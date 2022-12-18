@@ -289,10 +289,6 @@ public class UpdDataAdmin extends AppCompatActivity {
                     mainImage.setImageBitmap(bitmap);
                     delete.setVisibility(View.VISIBLE);
                 }
-                if(response.body().getBit() == false)
-                {
-                    btnUpd.setText("Принять");
-                }
             }
             @Override
             public void onFailure(Call<BeautifulPlacesModel> call, Throwable t) {
