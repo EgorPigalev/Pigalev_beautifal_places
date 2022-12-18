@@ -46,7 +46,7 @@
                 android:id="@+id/subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Открой скрытые для себя достопримечательности"
+                android:text="@string/slogan"
                 android:textAlignment="center"
                 android:textColor="@color/yellow_main"
                 android:textSize="17dp"
@@ -60,13 +60,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="40dp"
-            android:text="Добро пожаловать"
+            android:text="@string/hello"
             android:textColor="@color/yellow_main"
             android:textSize="16dp"
             app:layout_constraintTop_toBottomOf="@+id/mainUnit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"></TextView>
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

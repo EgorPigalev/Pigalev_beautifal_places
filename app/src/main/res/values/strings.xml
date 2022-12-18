@@ -6,6 +6,24 @@
     <string name="nav_close">Close</string>
     <string name="nameProject">World tourism</string>
     <string name="delete_search">Удалить сортировку и поиск</string>
+    <string name="back">Назад</string>
+    <string name="select_type_location">Выберите тип местности</string>
+    <string name="select_country">Выберите страну поиска</string>
+    <string name="sorting">Сортировка</string>
+    <string name="change_new">Принять новые</string>
+    <string name="change_old">Изменить старые</string>
+    <string name="hint">Для подробного описания кликните на запись</string>
+    <string name="header_login">Авторизация</string>
+    <string name="text_login">Логин</string>
+    <string name="text_password">Пароль</string>
+    <string name="text_confirm_password">Повторный пароль</string>
+    <string name="recover_password">Забыли пароль?</string>
+    <string name="button_login">Авторизироваться</string>
+    <string name="not_personal_account">Нет учетной записи?</string>
+    <string name="enter_login">Введите логин</string>
+    <string name="get_new_password">Получить новый пароль</string>
+    <string name="hint_recover_password">Новый пароль придёт вам на почту</string>
+    <string name="header_registration">Регистрация</string>
     <string-array name="fieldsNameSearch">
         <item></item>
         <item>По наименованию</item>
@@ -15,4 +33,32 @@
         <item>Возрастание</item>
         <item>Убывание</item>
     </string-array>
+    <string name="button_registration">Зарегистрироваться</string>
+    <string name="have_account">Уже есть пароль?</string>
+    <string name="slogan">Открой скрытые для себя достопримечательности</string>
+    <string name="hello">Добро пожаловать</string>
+    <string name="main_image">Основная фотография</string>
+    <string name="delete_image">Удалить фотографию</string>
+    <string name="name">Наименование</string>
+    <string name="select_country_location">Выбирите страну местоположения</string>
+    <string name="latitude">Широта</string>
+    <string name="longitude">Долгота</string>
+    <string name="description">Описание туристического места</string>
+    <string name="delete">Удалить</string>
+    <string name="update">Изменить</string>
+    <string name="version">Версия 1.0.0</string>
+    <string name="description_project">World tourism - это приложение, которое позволяет пользователям увидеть утаённые от глаза достопримечательности. Каждый может сам показать своё место которое он считает достойно красивым.</string>
+    <string name="author">Авторы:\nПигалёв Е.Д.</string>
+    <string name="add">Добавить</string>
+    <string name="header_favorite">Места помеченные как избранное</string>
+    <string name="count_add_places">Количество добавленных мест</string>
+    <string name="update_login_or_password">Изменить логин или пароль</string>
+    <string name="exit_account">Выйти из профиля</string>
+    <string name="coordinates">Координаты:</string>
+    <string name="header_change_login_and_password">Изменение логина и пароля</string>
+    <string name="new_login">Новый логин</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="old_password">Старый пароль</string>
+    <string name="change_data">Изменить данные</string>
+    <string name="add_new_place">Добавить новое место</string>
 </resources>

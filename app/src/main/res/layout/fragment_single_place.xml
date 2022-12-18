@@ -40,7 +40,6 @@
             android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Наименование"
             android:textSize="18dp"
             android:textColor="@color/black"
             android:textAlignment="center"
@@ -105,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:inputType="textMultiLine"
-            android:hint="Координаты:"
+            android:hint="@string/coordinates"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/vDivingLine"/>
 
@@ -134,7 +133,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:hint="Автор:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCoordinates"/>
 
@@ -177,7 +175,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:text="2"
                     android:textAlignment="textEnd"
                     android:textSize="24dp"
                     android:src="@drawable/icon_location"/>

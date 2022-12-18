@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_style"
-            android:text="Назад"
+            android:text="@string/back"
             android:textAllCaps="false"
             android:textColor="@drawable/button_text_color"
             android:textSize="17dp"
@@ -55,7 +55,7 @@
                 android:id="@+id/tvTypeLocality"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Выбирите тип местности"
+                android:text="@string/select_type_location"
                 android:textAlignment="center"
                 android:textSize="18dp"
                 android:layout_margin="5dp"
@@ -81,7 +81,7 @@
                 android:id="@+id/tvCountry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Выбирите страну поиска"
+                android:text="@string/select_country"
                 android:textAlignment="center"
                 android:textSize="18dp"
                 android:layout_margin="5dp"
@@ -107,7 +107,7 @@
                 android:id="@+id/tvSorting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Сортировка"
+                android:text="@string/sorting"
                 android:textAlignment="center"
                 android:textSize="18dp"
                 android:layout_margin="5dp"
@@ -171,7 +171,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:onClick="changeNew"
-                    android:text="Принять новые"
+                    android:text="@string/change_new"
                     android:textColor="@color/black" />
 
                 <RadioButton
@@ -183,7 +183,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:onClick="changeOld"
-                    android:text="Изменить старые"
+                    android:text="@string/change_old"
                     android:textColor="@color/black" />
             </RadioGroup>
 
@@ -214,7 +214,7 @@
             android:id="@+id/tvHint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Для подробного описания кликните на запись"
+            android:text="@string/hint"
             android:layout_margin="5dp"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"

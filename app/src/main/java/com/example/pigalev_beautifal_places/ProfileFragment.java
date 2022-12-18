@@ -75,7 +75,7 @@ public class ProfileFragment extends Fragment {
     }
 
     public static UserModel userModel;
-    Button deletePhoto, deleteUser, updateUser;
+    Button deletePhoto, updateUser;
     ProgressBar progressBar;
     TextView login, countPlaces;
     ImageView image;
@@ -103,13 +103,7 @@ public class ProfileFragment extends Fragment {
         progressBar = v.findViewById(R.id.pbLoading);
         login = (TextView) v.findViewById(R.id.nameProfile);
         countPlaces = (TextView) v.findViewById(R.id.countPlaces);
-        deleteUser = v.findViewById(R.id.btnDeleteProfile);
-        deleteUser.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                deleteUsers();
-            }
-        });
+
         deletePhoto = v.findViewById(R.id.btnDeletePhoto);
         deletePhoto.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -293,38 +287,5 @@ public class ProfileFragment extends Fragment {
         userModel.setImage("null");
         callPUTDataMethod(Main.index);
     }
-    public void deleteUsers()
-    {
-        callDeleteDataMethod();
-    }
 
-    private void callDeleteDataMethod() {
-
-        progressBar.setVisibility(View.VISIBLE);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
-        Call call = retrofitAPI.deleteUser(Main.index);
-        call.enqueue(new Callback<DataModal>() {
-            @Override
-            public void onResponse(Call<DataModal> call, Response<DataModal> response) {
-                progressBar.setVisibility(View.GONE);
-                if(!response.isSuccessful())
-                {
-                    Toast.makeText(getActivity(), "При удание пользователя возникла ошибка", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Toast.makeText(getActivity(), "Удаление прошло успешно", Toast.LENGTH_SHORT).show();
-                Intent myIntent = new Intent(getActivity(), Login.class);
-                getActivity().startActivity(myIntent);
-            }
-            @Override
-            public void onFailure(Call<DataModal> call, Throwable t) {
-                Toast.makeText(getActivity(), "При удаление пользователя возникла ошибка: " + t.getMessage(), Toast.LENGTH_LONG).show();
-                progressBar.setVisibility(View.GONE);
-            }
-        });
-    }
 }
