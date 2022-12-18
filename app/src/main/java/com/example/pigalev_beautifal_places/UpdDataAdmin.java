@@ -16,6 +16,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
@@ -102,10 +103,6 @@ public class UpdDataAdmin extends AppCompatActivity {
         Bundle arguments = getIntent().getExtras();
         index = arguments.getInt("key");
         loadingPB = findViewById(R.id.pbLoading);
-        TypeLocality = findViewById(R.id.spTypeLocality);
-        new GetTypeLocality().execute();
-        Country = findViewById(R.id.spCountry);
-        new GetAddress().execute();
         delete = findViewById(R.id.tvDeletePicture);
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +147,10 @@ public class UpdDataAdmin extends AppCompatActivity {
                 etMultiLine.setHint("Описание туристического места");
         });
         btnUpd = findViewById(R.id.btnUpdate);
-        callGetDataMethod();
+        TypeLocality = findViewById(R.id.spTypeLocality);
+        new GetTypeLocality().execute();
+        Country = findViewById(R.id.spCountry);
+        new GetAddress().execute();
     }
 
     String[][] type_localityArray;
@@ -161,7 +161,6 @@ public class UpdDataAdmin extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                loadingPB.setVisibility(View.VISIBLE);
                 URL url = new URL("https://ngknn.ru:5001/NGKNN/ПигалевЕД/api/TypeLocalitys");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -196,7 +195,7 @@ public class UpdDataAdmin extends AppCompatActivity {
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdDataAdmin.this, android.R.layout.simple_spinner_item, str_array);
                 TypeLocality.setAdapter(adapter);
-                loadingPB.setVisibility(View.INVISIBLE);
+                callGetDataMethod();
             }
             catch (Exception ignored)
             {
@@ -244,7 +243,6 @@ public class UpdDataAdmin extends AppCompatActivity {
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(UpdDataAdmin.this, android.R.layout.simple_spinner_item, str_array);
                 Country.setAdapter(adapter);
-                loadingPB.setVisibility(View.INVISIBLE);
             }
             catch (Exception ignored)
             {
