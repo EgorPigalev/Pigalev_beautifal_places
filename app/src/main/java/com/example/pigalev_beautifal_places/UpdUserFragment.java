@@ -193,7 +193,7 @@ public class UpdUserFragment extends Fragment {
                     progressBar.setVisibility(View.INVISIBLE);
                     return;
                 }
-                if(!response.body().equals(null))
+                if(response.body() != null)
                 {
                     if(!ProfileFragment.userModel.getLogin().equals(String.valueOf(etLogin.getText())))
                     {
