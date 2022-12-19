@@ -63,7 +63,6 @@ public class AddPlaceFragment extends Fragment {
     private String mParam2;
 
     public AddPlaceFragment() {
-        // Required empty public constructor
     }
 
     /**
